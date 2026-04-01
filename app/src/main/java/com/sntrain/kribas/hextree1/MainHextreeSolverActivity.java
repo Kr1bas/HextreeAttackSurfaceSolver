@@ -1,8 +1,13 @@
 package com.sntrain.kribas.hextree1;
 
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +19,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -30,7 +36,8 @@ import java.util.concurrent.Executors;
 
 public class MainHextreeSolverActivity extends AppCompatActivity {
     int count = 0;
-
+    boolean f18Active = false;
+    BroadcastReceiver f18Receiver = null;
     private ActivityResultLauncher<Intent> flag9Launcher =
             registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),
@@ -266,6 +273,62 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+
+        //Flag16Activity
+        Button f16 = findViewById(R.id.f16);
+        f16.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent();
+                intent1.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.receivers.Flag16Receiver");
+                intent1.putExtra("flag","give-flag-16");
+                sendBroadcast(intent1);
+            }
+        });
+
+        //Flag17Activity
+        Button f17 = findViewById(R.id.f17);
+        f17.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent();
+                intent1.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.receivers.Flag17Receiver");
+                intent1.putExtra("flag","give-flag-17");
+                sendOrderedBroadcast(intent1,null);
+            }
+        });
+
+        //Flag18Activity
+        Button f18 = findViewById(R.id.f18);
+        String green = "#4CAF50FF";
+        String red = "#F44336FF";
+        f18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (f18Receiver == null){
+                    Log.v("Flag18Solver","Creating Receiver");
+                    f18Receiver = new Flag18Receiver();
+                }
+                if (f18Active){
+                    //Toggle Receiver off
+                    f18Active = false;
+                    Log.v("Flag18Solver","Unregistering Receiver");
+                    f18.setBackgroundColor(Color.RED);
+                    unregisterReceiver(f18Receiver);
+                }else {
+                    //Toggle Receiver on
+                    Log.v("Flag18Solver","Registering Receiver");
+                    f18Active = true;
+                    f18.setBackgroundColor(Color.GREEN);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        registerReceiver(f18Receiver, new IntentFilter("io.hextree.broadcast.FREE_FLAG"), Context.RECEIVER_EXPORTED);
+                    } else {
+                        registerReceiver(f18Receiver, new IntentFilter("io.hextree.broadcast.FREE_FLAG"));
+                    }
+                }
+            }
+        });
+
 
         //Flag22Activity
         Button f22 = findViewById(R.id.f22);

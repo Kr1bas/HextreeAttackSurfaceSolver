@@ -111,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F9"
-        app:layout_constraintBottom_toTopOf="@+id/f22"
+        app:layout_constraintBottom_toTopOf="@+id/f16"
         app:layout_constraintEnd_toStartOf="@+id/f12"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/f5" />
@@ -121,7 +121,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F12"
-        app:layout_constraintBottom_toTopOf="@+id/f22"
+        app:layout_constraintBottom_toTopOf="@+id/f16"
         app:layout_constraintEnd_toStartOf="@+id/f13"
         app:layout_constraintStart_toEndOf="@+id/f9"
         app:layout_constraintTop_toBottomOf="@+id/f5" />
@@ -131,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F13"
-        app:layout_constraintBottom_toTopOf="@+id/f22"
+        app:layout_constraintBottom_toTopOf="@+id/f16"
         app:layout_constraintEnd_toStartOf="@+id/f15"
         app:layout_constraintStart_toEndOf="@+id/f12"
         app:layout_constraintTop_toBottomOf="@+id/f5" />
@@ -143,17 +143,47 @@
         android:text="F22"
         app:layout_constraintBottom_toTopOf="@+id/home_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/f9" />
+        app:layout_constraintStart_toEndOf="@+id/f18"
+        app:layout_constraintTop_toBottomOf="@+id/f12" />
 
     <Button
         android:id="@+id/f15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F15"
-        app:layout_constraintBottom_toTopOf="@+id/f22"
+        app:layout_constraintBottom_toTopOf="@+id/f16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/f13"
         app:layout_constraintTop_toBottomOf="@+id/f5" />
+
+    <Button
+        android:id="@+id/f16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F16"
+        app:layout_constraintBottom_toTopOf="@+id/home_text"
+        app:layout_constraintEnd_toStartOf="@+id/f17"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/f9" />
+
+    <Button
+        android:id="@+id/f17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F17"
+        app:layout_constraintBottom_toTopOf="@+id/home_text"
+        app:layout_constraintEnd_toStartOf="@+id/f18"
+        app:layout_constraintStart_toEndOf="@+id/f16"
+        app:layout_constraintTop_toBottomOf="@+id/f12" />
+
+    <Button
+        android:id="@+id/f18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F18"
+        app:layout_constraintBottom_toTopOf="@+id/home_text"
+        app:layout_constraintEnd_toStartOf="@+id/f22"
+        app:layout_constraintStart_toEndOf="@+id/f17"
+        app:layout_constraintTop_toBottomOf="@+id/f13" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
