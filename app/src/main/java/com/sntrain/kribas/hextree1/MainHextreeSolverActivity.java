@@ -105,13 +105,10 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
 
         //Flag1Activity
         Button f1 = findViewById(R.id.f1);
-        f1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.activities.Flag1Activity");
-                startActivity(intent);
-            }
+        f1.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.activities.Flag1Activity");
+            startActivity(intent);
         });
 
         //Flag2Activity
@@ -245,10 +242,7 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent1 = new Intent();
                 intent1.setAction("android.intent.action.VIEW");
-                //intent1.addCategory("android.intent.category.BROWSABLE");
-                intent1.setData(Uri.parse("hex://flag?action=give-me"));
-                //intent1.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.activities.Flag13Activity");
-                //intent1.putExtra("LOGIN",true);
+                intent1.setData(Uri.parse("https://ht-api-mocks-lcfc4kr5oa-uc.a.run.app/android-link-builder?href="+Uri.encode("hex://flag?action=give-me")));
                 startActivity(intent1);
             }
         });
@@ -300,8 +294,6 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
 
         //Flag18Activity
         Button f18 = findViewById(R.id.f18);
-        String green = "#4CAF50FF";
-        String red = "#F44336FF";
         f18.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -326,6 +318,19 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
                         registerReceiver(f18Receiver, new IntentFilter("io.hextree.broadcast.FREE_FLAG"));
                     }
                 }
+            }
+        });
+
+        //Flag19Activity
+        Button f19 = findViewById(R.id.f19);
+        f17.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent();
+                intent1.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.receivers.Flag19Receiver");
+                intent1.setAction("io.hextree.broadcast.F19_APPWIDGET_UPDATE");
+
+                sendOrderedBroadcast(intent1,null);
             }
         });
 

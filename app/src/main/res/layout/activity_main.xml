@@ -143,8 +143,7 @@
         android:text="F22"
         app:layout_constraintBottom_toTopOf="@+id/home_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/f18"
-        app:layout_constraintTop_toBottomOf="@+id/f12" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/f15"
@@ -161,7 +160,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F16"
-        app:layout_constraintBottom_toTopOf="@+id/home_text"
+        app:layout_constraintBottom_toTopOf="@+id/f22"
         app:layout_constraintEnd_toStartOf="@+id/f17"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/f9" />
@@ -171,7 +170,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F17"
-        app:layout_constraintBottom_toTopOf="@+id/home_text"
+        app:layout_constraintBottom_toTopOf="@+id/f22"
         app:layout_constraintEnd_toStartOf="@+id/f18"
         app:layout_constraintStart_toEndOf="@+id/f16"
         app:layout_constraintTop_toBottomOf="@+id/f12" />
@@ -181,9 +180,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F18"
-        app:layout_constraintBottom_toTopOf="@+id/home_text"
-        app:layout_constraintEnd_toStartOf="@+id/f22"
+        app:layout_constraintBottom_toTopOf="@+id/f22"
+        app:layout_constraintEnd_toStartOf="@+id/f19"
         app:layout_constraintStart_toEndOf="@+id/f17"
         app:layout_constraintTop_toBottomOf="@+id/f13" />
+
+    <Button
+        android:id="@+id/f19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F19"
+        app:layout_constraintBottom_toTopOf="@+id/f22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/f18"
+        app:layout_constraintTop_toBottomOf="@+id/f15" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
