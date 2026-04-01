@@ -1,7 +1,7 @@
 # HextreeAttackSurfaceSolver
 Main app used to solve the AttackSurface flags on hextree
 
-# Currently Availabel Flags
+# Currently Available Flags
 | **Flag** | **Category**   | **Solved** |
 |----------|----------------|------------|
 | **1**    | Activity       | yes        |
