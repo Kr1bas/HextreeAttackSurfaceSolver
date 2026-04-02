@@ -27,8 +27,8 @@ Main app used to solve the AttackSurface flags on hextree
 | **21**   | BroadcastReceiver | yes        |
 | **22**   | PendingIntent     | yes        |
 | **23**   | PendingIntent     | yes        |
-| **24**   | Service           | no         |
-| **25**   | Service           | no         |
+| **24**   | Service           | yes        |
+| **25**   | Service           | yes*       |
 | **26**   | Service           | no         |
 | **27**   | Service           | no         |
 | **28**   | Service           | no         |
@@ -36,3 +36,8 @@ Main app used to solve the AttackSurface flags on hextree
 | **30**   | ContentProvider   | no         |
 
 
+#### Notes
+- **Flag 25** is a bit buggy the concept is in the code however it works better when starting the service via adb while the AttackSurface app is open: 
+  - `adb shell am startservice -n io.hextree.attacksurface/io.hextree.attacksurface.services.Flag25Service -a io.hextree.services.UNLOCK1`
+  - `adb shell am startservice -n io.hextree.attacksurface/io.hextree.attacksurface.services.Flag25Service -a io.hextree.services.UNLOCK2`
+  - `adb shell am startservice -n io.hextree.attacksurface/io.hextree.attacksurface.services.Flag25Service -a io.hextree.services.UNLOCK3`
