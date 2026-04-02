@@ -353,6 +353,27 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
                 intent1.setAction("io.hextree.broadcast.GET_FLAG");
                 intent1.putExtra("give-flag",true);
                 sendBroadcast(intent1,null);
+                Log.v("Flag20Solver","This should solve the challenge but i'm not sure it's the intended way");
+            }
+        });
+
+        //Flag20Activity
+        Button f21 = findViewById(R.id.f21);
+        f21.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag21Solver","Button Clicked");
+                Log.v("Flag21Solver","Make sure you click the Flag21 notification button on after setting this broadcast receiver");
+                IntentFilter filter = new IntentFilter("io.hextree.broadcast.GIVE_FLAG");
+                filter.setPriority(1000);
+                registerReceiver(new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        String flag = intent.getStringExtra("flag");
+                        Log.d("Flag21Solver", "Flag: " + flag);
+                    }
+                }, filter,RECEIVER_EXPORTED);
+                //sendBroadcast(intent1,null);
             }
         });
 

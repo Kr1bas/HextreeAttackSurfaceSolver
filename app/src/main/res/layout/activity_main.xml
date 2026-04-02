@@ -133,7 +133,7 @@
         android:text="F22"
         app:layout_constraintBottom_toBottomOf="@+id/f20"
         app:layout_constraintEnd_toStartOf="@+id/button6"
-        app:layout_constraintStart_toEndOf="@+id/button5"
+        app:layout_constraintStart_toEndOf="@+id/f21"
         app:layout_constraintTop_toTopOf="@+id/f20" />
 
     <Button
@@ -192,15 +192,15 @@
         android:layout_height="wrap_content"
         android:text="F20"
         app:layout_constraintBottom_toTopOf="@+id/button7"
-        app:layout_constraintEnd_toStartOf="@+id/button5"
+        app:layout_constraintEnd_toStartOf="@+id/f21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/f16" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/f21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="F21"
         app:layout_constraintBottom_toBottomOf="@+id/f20"
         app:layout_constraintEnd_toStartOf="@+id/f22"
         app:layout_constraintStart_toEndOf="@+id/f20"
