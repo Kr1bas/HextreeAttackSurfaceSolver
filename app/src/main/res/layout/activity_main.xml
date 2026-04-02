@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainHextreeSolverActivity">
 
-    <TextView
-        android:id="@+id/home_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/MainActivity.homeText_initialValue"
-        app:layout_constraintBottom_toTopOf="@+id/home_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <Button
         android:id="@+id/home_button"
         android:layout_width="wrap_content"
@@ -41,35 +31,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F2"
-        app:layout_constraintBottom_toTopOf="@+id/f5"
+        app:layout_constraintBottom_toBottomOf="@+id/f1"
         app:layout_constraintEnd_toStartOf="@+id/f3"
         app:layout_constraintStart_toEndOf="@+id/f1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/f1" />
 
     <Button
         android:id="@+id/f3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F3"
-        app:layout_constraintBottom_toTopOf="@+id/f5"
+        app:layout_constraintBottom_toBottomOf="@+id/f1"
         app:layout_constraintEnd_toStartOf="@+id/f4"
         app:layout_constraintStart_toEndOf="@+id/f2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/f1" />
 
     <Button
         android:id="@+id/f4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F4"
-        app:layout_constraintBottom_toTopOf="@+id/f5"
+        app:layout_constraintBottom_toBottomOf="@+id/f1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/f3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/f1" />
 
     <Button
         android:id="@+id/f5"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:text="F5"
         app:layout_constraintBottom_toTopOf="@+id/f9"
         app:layout_constraintEnd_toStartOf="@+id/f6"
@@ -81,30 +71,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F7"
-        app:layout_constraintBottom_toTopOf="@+id/f9"
+        app:layout_constraintBottom_toBottomOf="@+id/f5"
         app:layout_constraintEnd_toStartOf="@+id/f8"
         app:layout_constraintStart_toEndOf="@+id/f6"
-        app:layout_constraintTop_toBottomOf="@+id/f1" />
+        app:layout_constraintTop_toTopOf="@+id/f5" />
 
     <Button
         android:id="@+id/f6"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:text="F6"
-        app:layout_constraintBottom_toTopOf="@+id/f9"
+        app:layout_constraintBottom_toBottomOf="@+id/f5"
         app:layout_constraintEnd_toStartOf="@+id/f7"
         app:layout_constraintStart_toEndOf="@+id/f5"
-        app:layout_constraintTop_toBottomOf="@+id/f1" />
+        app:layout_constraintTop_toTopOf="@+id/f5" />
 
     <Button
         android:id="@+id/f8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F8"
-        app:layout_constraintBottom_toTopOf="@+id/f9"
+        app:layout_constraintBottom_toBottomOf="@+id/f5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/f7"
-        app:layout_constraintTop_toBottomOf="@+id/f1" />
+        app:layout_constraintTop_toTopOf="@+id/f5" />
 
     <Button
         android:id="@+id/f9"
@@ -121,46 +111,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F12"
-        app:layout_constraintBottom_toTopOf="@+id/f16"
+        app:layout_constraintBottom_toBottomOf="@+id/f9"
         app:layout_constraintEnd_toStartOf="@+id/f13"
         app:layout_constraintStart_toEndOf="@+id/f9"
-        app:layout_constraintTop_toBottomOf="@+id/f5" />
+        app:layout_constraintTop_toTopOf="@+id/f9" />
 
     <Button
         android:id="@+id/f13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F13"
-        app:layout_constraintBottom_toTopOf="@+id/f16"
+        app:layout_constraintBottom_toBottomOf="@+id/f9"
         app:layout_constraintEnd_toStartOf="@+id/f15"
         app:layout_constraintStart_toEndOf="@+id/f12"
-        app:layout_constraintTop_toBottomOf="@+id/f5" />
+        app:layout_constraintTop_toTopOf="@+id/f9" />
 
     <Button
         android:id="@+id/f22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F22"
-        app:layout_constraintBottom_toTopOf="@+id/home_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/f20"
+        app:layout_constraintEnd_toStartOf="@+id/button6"
+        app:layout_constraintStart_toEndOf="@+id/button5"
+        app:layout_constraintTop_toTopOf="@+id/f20" />
 
     <Button
         android:id="@+id/f15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F15"
-        app:layout_constraintBottom_toTopOf="@+id/f16"
+        app:layout_constraintBottom_toBottomOf="@+id/f9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/f13"
-        app:layout_constraintTop_toBottomOf="@+id/f5" />
+        app:layout_constraintTop_toTopOf="@+id/f9" />
 
     <Button
         android:id="@+id/f16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F16"
-        app:layout_constraintBottom_toTopOf="@+id/f22"
+        app:layout_constraintBottom_toTopOf="@+id/f20"
         app:layout_constraintEnd_toStartOf="@+id/f17"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/f9" />
@@ -170,29 +161,139 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F17"
-        app:layout_constraintBottom_toTopOf="@+id/f22"
+        app:layout_constraintBottom_toBottomOf="@+id/f16"
         app:layout_constraintEnd_toStartOf="@+id/f18"
         app:layout_constraintStart_toEndOf="@+id/f16"
-        app:layout_constraintTop_toBottomOf="@+id/f12" />
+        app:layout_constraintTop_toTopOf="@+id/f16" />
 
     <Button
         android:id="@+id/f18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F18"
-        app:layout_constraintBottom_toTopOf="@+id/f22"
+        app:layout_constraintBottom_toBottomOf="@+id/f16"
         app:layout_constraintEnd_toStartOf="@+id/f19"
         app:layout_constraintStart_toEndOf="@+id/f17"
-        app:layout_constraintTop_toBottomOf="@+id/f13" />
+        app:layout_constraintTop_toTopOf="@+id/f16" />
 
     <Button
         android:id="@+id/f19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F19"
-        app:layout_constraintBottom_toTopOf="@+id/f22"
+        app:layout_constraintBottom_toBottomOf="@+id/f16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/f18"
-        app:layout_constraintTop_toBottomOf="@+id/f15" />
+        app:layout_constraintTop_toTopOf="@+id/f16" />
+
+    <Button
+        android:id="@+id/f20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F20"
+        app:layout_constraintBottom_toTopOf="@+id/button7"
+        app:layout_constraintEnd_toStartOf="@+id/button5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/f16" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/f20"
+        app:layout_constraintEnd_toStartOf="@+id/f22"
+        app:layout_constraintStart_toEndOf="@+id/f20"
+        app:layout_constraintTop_toTopOf="@+id/f20" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/f20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/f22"
+        app:layout_constraintTop_toTopOf="@+id/f20" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/button8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/f20" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/button7"
+        app:layout_constraintEnd_toStartOf="@+id/button9"
+        app:layout_constraintStart_toEndOf="@+id/button7"
+        app:layout_constraintTop_toTopOf="@+id/button7" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/button7"
+        app:layout_constraintEnd_toStartOf="@+id/button10"
+        app:layout_constraintStart_toEndOf="@+id/button8"
+        app:layout_constraintTop_toTopOf="@+id/button7" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/button7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button9"
+        app:layout_constraintTop_toTopOf="@+id/button7" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button7" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toTopOf="@+id/button" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintTop_toTopOf="@+id/button" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button3"
+        app:layout_constraintTop_toTopOf="@+id/button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

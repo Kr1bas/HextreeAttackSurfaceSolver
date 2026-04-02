@@ -1,10 +1,13 @@
 package com.sntrain.kribas.hextree1;
 
+import android.Manifest;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -19,6 +22,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -61,13 +67,11 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        TextView homeText = findViewById(R.id.home_text);
         Button homeButton = findViewById(R.id.home_button);
 
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                homeText.setText(String.format(getString(R.string.MainActivity_homeText_updatedValue), ++count));
                 Log.v("MainActivity.onCreate","homeButton.onClick() activated");
                 ExecutorService executor = Executors.newSingleThreadExecutor();
 
@@ -89,8 +93,6 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
                         }
 
                         String result = sb.toString();
-
-                        runOnUiThread(() -> homeText.setText(result));
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -340,6 +342,20 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
             }
         });
 
+        //Flag20Activity
+        Button f20 = findViewById(R.id.f20);
+        f20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag20Solver","Button Clicked");
+                Log.v("Flag20Solver","Make sure you have clicked the Flag20 Activity on the Hextree App before sending this broadcast");
+                Intent intent1 = new Intent();
+                intent1.setAction("io.hextree.broadcast.GET_FLAG");
+                intent1.putExtra("give-flag",true);
+                sendBroadcast(intent1,null);
+            }
+        });
+
 
         //Flag22Activity
         Button f22 = findViewById(R.id.f22);
@@ -383,7 +399,5 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         count = savedInstanceState.getInt("count");
         Log.v("MainActivity.onRestoreInstanceState", String.format("Restoring count: %d", count));
-        TextView homeText = findViewById(R.id.home_text);
-        homeText.setText(String.format(getString(R.string.MainActivity_homeText_updatedValue), count));
     }
 }
