@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -391,6 +392,30 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
                 PendingIntent pending = PendingIntent.getActivity(MainHextreeSolverActivity.this,1337,intent2,PendingIntent.FLAG_MUTABLE);
                 intent1.putExtra("PENDING",pending);
                 startActivity(intent1);
+            }
+        });
+
+        Button f24 = findViewById(R.id.f24);
+        f24.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag24Solver","Button Clicked");
+                Intent app = new Intent();
+                app.setClassName("io.hextree.attacksurface", "io.hextree.attacksurface.MainActivity");
+                app.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(app);
+                v.postDelayed(() -> {
+                    Intent intent1 = new Intent();
+                    intent1.setClassName("io.hextree.attacksurface", "io.hextree.attacksurface.services.Flag24Service");
+                    intent1.setAction("io.hextree.services.START_FLAG24_SERVICE");
+                    Log.v("Flag24Solver",DumpIntent.dumpIntent(MainHextreeSolverActivity.this,intent1));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        startForegroundService(intent1);
+                    } else {
+                        startService(intent1);
+                    }
+                }, 5000);
+
             }
         });
     }
