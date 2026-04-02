@@ -22,7 +22,7 @@ Main app used to solve the AttackSurface flags on hextree
 | **16**   | Broadcast      | yes        |
 | **17**   | Broadcast      | yes        |
 | **18**   | Broadcast      | yes        |
-| **19**   | Broadcast      | no         |
+| **19**   | Broadcast      | yes        |
 | **20**   | Broadcast      | no         |
 | **21**   | Broadcast      | no         |
 | **22**   | PendingIntent  | yes        |
