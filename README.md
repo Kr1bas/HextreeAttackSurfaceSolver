@@ -29,8 +29,8 @@ Main app used to solve the AttackSurface flags on hextree
 | **23**   | PendingIntent     | yes        |
 | **24**   | Service           | yes        |
 | **25**   | Service           | yes*       |
-| **26**   | Service           | no         |
-| **27**   | Service           | no         |
+| **26**   | Service           | yes        |
+| **27**   | Service           | yes        |
 | **28**   | Service           | no         |
 | **29**   | Service           | no         |
 | **30**   | ContentProvider   | no         |

