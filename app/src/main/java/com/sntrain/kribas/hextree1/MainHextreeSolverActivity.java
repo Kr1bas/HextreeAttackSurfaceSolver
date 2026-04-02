@@ -323,14 +323,20 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
 
         //Flag19Activity
         Button f19 = findViewById(R.id.f19);
-        f17.setOnClickListener(new View.OnClickListener() {
+        f19.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.v("Flag19Solver","Sending broadcast");
                 Intent intent1 = new Intent();
-                intent1.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.receivers.Flag19Receiver");
-                intent1.setAction("io.hextree.broadcast.F19_APPWIDGET_UPDATE");
-
-                sendOrderedBroadcast(intent1,null);
+                intent1.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.receivers.Flag19Widget");
+                intent1.setAction("io.hextree.APPWIDGET_UPDATE");
+                Bundle bundleExtra = new Bundle();
+                bundleExtra.putInt("appWidgetMaxHeight",1094795585);
+                bundleExtra.putInt("appWidgetMinHeight",322376503);
+                intent1.putExtra("appWidgetOptions",bundleExtra);
+                String action = intent1.getAction();
+                Log.v("Flag19Solver","Checking pass condition (should be false): "+String.valueOf((action == null || !action.contains("APPWIDGET_UPDATE") || (bundleExtra = intent1.getBundleExtra("appWidgetOptions")) == null) ));
+                sendBroadcast(intent1);
             }
         });
 
