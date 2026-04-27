@@ -2,12 +2,16 @@ package com.sntrain.kribas.hextree1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Set;
 
-public class DumpIntent {
+public class MyUtils {
     public static String dumpIntent(Context context, Intent intent) {
         return dumpIntent(context, intent, 0);
     }
@@ -180,5 +184,37 @@ public class DumpIntent {
         }
         return sb.toString();
     }
+
+
+    public static String readFile(Context context, Uri uri) {
+        ByteArrayOutputStream byteArrayOutputStream;
+        byte[] bArr;
+        try {
+            InputStream fileInputStream = context.getContentResolver().openInputStream(uri);
+            try {
+                byteArrayOutputStream = new ByteArrayOutputStream();
+                try {
+                    bArr = new byte[1024];
+                } finally {
+                }
+            } finally {
+            }
+            while (true) {
+                int i = fileInputStream.read(bArr);
+                if (i != -1) {
+                    byteArrayOutputStream.write(bArr, 0, i);
+                } else {
+                    String string = byteArrayOutputStream.toString("UTF-8");
+                    byteArrayOutputStream.close();
+                    fileInputStream.close();
+                    return string;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
 
